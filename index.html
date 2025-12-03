@@ -1,1 +1,575 @@
-index.html
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vikings News</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: #000;
+            color: #fff;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        .bg-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            animation: gridMove 20s linear infinite;
+        }
+
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.3;
+            pointer-events: none;
+            animation: float 8s ease-in-out infinite;
+        }
+
+        .orb-1 {
+            top: 10%;
+            left: 10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, #3b82f6, transparent);
+            animation-delay: 0s;
+        }
+
+        .orb-2 {
+            bottom: 20%;
+            right: 10%;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, #8b5cf6, transparent);
+            animation-delay: 2s;
+        }
+
+        .orb-3 {
+            top: 50%;
+            left: 50%;
+            width: 300px;
+            height: 300px;
+            background: radial-gradient(circle, #06b6d4, transparent);
+            animation-delay: 4s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            33% { transform: translate(30px, -30px) scale(1.1); }
+            66% { transform: translate(-30px, 30px) scale(0.9); }
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            backdrop-filter: blur(20px);
+            background: rgba(0, 0, 0, 0.7);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            animation: slideDown 0.8s ease-out;
+        }
+
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .header-content {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 1.5rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 1.8rem;
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        .nav {
+            display: flex;
+            gap: 2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .nav a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 0.5rem 0;
+        }
+
+        .nav a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            transition: width 0.3s ease;
+        }
+
+        .nav a:hover {
+            color: #fff;
+        }
+
+        .nav a:hover::after {
+            width: 100%;
+        }
+
+        main {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 8rem 2rem 4rem;
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 6rem;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero-badge {
+            display: inline-block;
+            padding: 0.5rem 1.5rem;
+            background: rgba(59, 130, 246, 0.1);
+            border: 1px solid rgba(59, 130, 246, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 2rem;
+            animation: glow 2s ease-in-out infinite;
+        }
+
+        @keyframes glow {
+            0%, 100% { box-shadow: 0 0 20px rgba(59, 130, 246, 0.3); }
+            50% { box-shadow: 0 0 40px rgba(59, 130, 246, 0.6); }
+        }
+
+        .hero h1 {
+            font-size: 4.5rem;
+            font-weight: 900;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #fff, #888);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255, 255, 255, 0.6);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .article-container {
+            display: grid;
+            gap: 2rem;
+            animation: fadeInUp 1.2s ease-out;
+        }
+
+        .article {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 3rem;
+            transition: all 0.4s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .article::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+            background-size: 200% 100%;
+            animation: shimmer 3s linear infinite;
+        }
+
+        @keyframes shimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .article:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 20px 60px rgba(59, 130, 246, 0.2);
+        }
+
+        .article-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .author-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1.2rem;
+            animation: rotate 10s linear infinite;
+        }
+
+        @keyframes rotate {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+
+        .author-details h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .meta {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .category-badge {
+            padding: 0.4rem 1rem;
+            background: rgba(255, 215, 0, 0.1);
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #ffd700;
+        }
+
+        .article-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            line-height: 1.2;
+        }
+
+        .article-content {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .article-content h2 {
+            font-size: 1.5rem;
+            margin: 2rem 0 1rem;
+            color: #fff;
+        }
+
+        .article-content p {
+            margin-bottom: 1.5rem;
+        }
+
+        .highlight {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .quote {
+            border-left: 4px solid #3b82f6;
+            padding-left: 1.5rem;
+            margin: 2rem 0;
+            font-style: italic;
+            color: rgba(255, 255, 255, 0.9);
+            position: relative;
+        }
+
+        .quote::before {
+            content: '"';
+            position: absolute;
+            left: -0.5rem;
+            top: -1rem;
+            font-size: 4rem;
+            color: rgba(59, 130, 246, 0.3);
+            font-family: Georgia, serif;
+        }
+
+        .footer-note {
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-size: 0.95rem;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+        }
+
+        .stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .stat-card {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: scale(1.05);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-icon {
+            width: 50px;
+            height: 50px;
+            margin: 0 auto 1rem;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 800;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .article-title {
+                font-size: 1.8rem;
+            }
+
+            .nav {
+                display: none;
+            }
+
+            .article {
+                padding: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-grid"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <div class="logo-icon">📰</div>
+                <span>Vikings News</span>
+            </div>
+            <nav class="nav">
+                <a href="#home">Início</a>
+                <a href="#noticias">Notícias</a>
+                <a href="#comunidade">Comunidade</a>
+                <a href="#contato">Contato</a>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero">
+            <div class="hero-badge">🔥 PRIMEIRA EDIÇÃO</div>
+            <h1>Vikings News</h1>
+            <p class="hero-subtitle">Sempre comprometidos com a informação que importa para nossa comunidade</p>
+        </section>
+
+        <div class="article-container">
+            <article class="article">
+                <div class="article-header">
+                    <div class="author-info">
+                        <div class="author-avatar">C</div>
+                        <div class="author-details">
+                            <h3>Cruz</h3>
+                            <div class="meta">
+                                <span>⏰ 29/11/25 às 08:12</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="category-badge">
+                        👑 Destaque
+                    </div>
+                </div>
+
+                <h1 class="article-title">O Retorno De um Líder 👑</h1>
+
+                <div class="article-content">
+                    <p>Um ótimo dia a todos que nos acompanham em nossa <span class="highlight">primeira edição</span> do Vikings News!</p>
+
+                    <p>Hoje iremos abordar um assunto muito importante: <strong>O retorno do Dono</strong></p>
+
+                    <h2>📢 Anúncio</h2>
+
+                    <p class="quote">
+                        Hoje iremos falar sobre o assunto que voltou com a alegria do dia de hoje! A volta, pelo jeito ele passou por problemas pessoais mas já está bem! Todos nós que somos amigos ficamos muito felizes com essa notícia e por isso vou dizer uma mensagem para ele: <strong>"Felix, obrigado por voltar! ❤"</strong>
+                    </p>
+
+                    <p>A comunidade Vikings se mobilizou em uma demonstração de apoio e carinho pela volta de um dos seus membros mais importantes. Felix enfrentou desafios pessoais, mas conseguiu superar e retorna trazendo renovadas energias para o grupo.</p>
+
+                    <p>Este momento marca não apenas o retorno de um líder, mas também a força dos laços de amizade que unem nossa comunidade. É em momentos como este que vemos o verdadeiro significado de pertencimento e apoio mútuo.</p>
+
+                    <div class="footer-note">
+                        <strong>Vikings News</strong><br>
+                        Todos os dados foram levantados por Cruz (responsável pelo anúncio) a partir de registros do servidor.<br>
+                        <em>Equipe Vikings News, um dia após o outro sempre se comprometendo com a informação.</em>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <div class="stats">
+            <div class="stat-card">
+                <div class="stat-icon">📊</div>
+                <div class="stat-value">1ª</div>
+                <div class="stat-label">Edição</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">👥</div>
+                <div class="stat-value">∞</div>
+                <div class="stat-label">Comunidade</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-value">100%</div>
+                <div class="stat-label">Compromisso</div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('mousemove', (e) => {
+            const orbs = document.querySelectorAll('.orb');
+            const x = e.clientX / window.innerWidth;
+            const y = e.clientY / window.innerHeight;
+            
+            orbs.forEach((orb, index) => {
+                const speed = (index + 1) * 20;
+                orb.style.transform = translate(${x * speed}px, ${y * speed}px);
+            });
+        });
+
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.stat-card').forEach(card => {
+            card.style.opacity = '0';
+            card.style.transform = 'translateY(30px)';
+            card.style.transition = 'all 0.6s ease';
+            observer.observe(card);
+        });
+    </script>
+</body>
+</html>
