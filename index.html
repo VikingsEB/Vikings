@@ -262,6 +262,7 @@
             transition: all 0.4s ease;
             position: relative;
             overflow: hidden;
+            margin-bottom: 2rem;
         }
 
         .article::before {
@@ -399,6 +400,189 @@
             font-weight: 500;
         }
 
+        /* SISTEMA DE COMENTÁRIOS */
+        .comments-section {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            margin-top: 3rem;
+        }
+
+        .comments-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comments-header h2 {
+            font-size: 1.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comment-count {
+            background: rgba(59, 130, 246, 0.2);
+            color: #3b82f6;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .comment-form {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            color: rgba(255, 255, 255, 0.8);
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 1rem;
+            font-family: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .submit-btn {
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            color: #fff;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px rgba(59, 130, 246, 0.4);
+        }
+
+        .submit-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .comments-list {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .comment {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            animation: slideIn 0.4s ease;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .comment:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .comment-header-info {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .comment-avatar {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #06b6d4, #3b82f6);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 1rem;
+        }
+
+        .comment-info h4 {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .comment-time {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .comment-text {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.6;
+        }
+
+        .no-comments {
+            text-align: center;
+            padding: 3rem;
+            color: rgba(255, 255, 255, 0.5);
+            font-style: italic;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: rgba(255, 255, 255, 0.6);
+        }
+
         .stats {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -463,6 +647,10 @@
             .tab-button {
                 width: 100%;
             }
+
+            .comments-section {
+                padding: 1.5rem;
+            }
         }
     </style>
 </head>
@@ -524,7 +712,7 @@
                     <h2>📢 Anúncio</h2>
 
                     <p class="quote">
-                        Hoje iremos falar sobre o assunto que chocou todos nós, a saída de uma lenda da Vikings, de um amigo e um líder. A saída de Dede. Isso é triste para todos nós que éramos amigos, ajudantes e conhecidos dele. Eu como Cruz gostaria de falar uma mensagem para Dede: <strong>Nós nunca te esqueceremos Dede! ❤️</strong>
+                        Hoje iremos falar sobre o assunto que chocou todos nós, a saída de uma lenda da Vikings, de um amigo e um líder. A saída de Dede. Isso é triste para todos nós que éramos amigos, ajudantes e conhecidos dele. Eu como Cruz gostaria de falar uma mensagem para Dede: <strong>Nós nunca te esqueceremos Dede! ❤</strong>
                     </p>
 
                     <p>A comunidade Vikings lamenta profundamente a partida de um dos seus membros mais icônicos. Dede não foi apenas um moderador, mas um verdadeiro líder que deixou sua marca em cada momento compartilhado com a comunidade.</p>
@@ -540,6 +728,39 @@
                     </div>
                 </div>
             </article>
+
+            <!-- Seção de Comentários -->
+            <div class="comments-section">
+                <div class="comments-header">
+                    <h2>💬 Comentários <span class="comment-count" id="count-noticia1">0</span></h2>
+                </div>
+
+                <div class="comment-form">
+                    <form onsubmit="handleSubmit(event, 'noticia1')">
+                        <div class="form-group">
+                            <label for="name-noticia1">Nome (opcional)</label>
+                            <input type="text" id="name-noticia1" placeholder="Deixe em branco para comentar anonimamente">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment-noticia1">Seu comentário *</label>
+                            <textarea id="comment-noticia1" placeholder="O que você achou dessa notícia?" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn" id="btn-noticia1">
+                            📤 Enviar Comentário
+                        </button>
+                    </form>
+                </div>
+
+                <div id="loading-noticia1" class="loading" style="display: none;">
+                    Carregando comentários...
+                </div>
+
+                <div class="comments-list" id="comments-noticia1">
+                    <div class="no-comments">
+                        Seja o primeiro a comentar sobre essa notícia!
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div id="noticia2" class="tab-content">
@@ -583,6 +804,39 @@
                     </div>
                 </div>
             </article>
+
+            <!-- Seção de Comentários -->
+            <div class="comments-section">
+                <div class="comments-header">
+                    <h2>💬 Comentários <span class="comment-count" id="count-noticia2">0</span></h2>
+                </div>
+
+                <div class="comment-form">
+                    <form onsubmit="handleSubmit(event, 'noticia2')">
+                        <div class="form-group">
+                            <label for="name-noticia2">Nome (opcional)</label>
+                            <input type="text" id="name-noticia2" placeholder="Deixe em branco para comentar anonimamente">
+                        </div>
+                        <div class="form-group">
+                            <label for="comment-noticia2">Seu comentário *</label>
+                            <textarea id="comment-noticia2" placeholder="O que você achou dessa notícia?" required></textarea>
+                        </div>
+                        <button type="submit" class="submit-btn" id="btn-noticia2">
+                            📤 Enviar Comentário
+                        </button>
+                    </form>
+                </div>
+
+                <div id="loading-noticia2" class="loading" style="display: none;">
+                    Carregando comentários...
+                </div>
+
+                <div class="comments-list" id="comments-noticia2">
+                    <div class="no-comments">
+                        Seja o primeiro a comentar sobre essa notícia!
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="stats">
@@ -598,59 +852,4 @@
             </div>
         </div>
         
-        <div style="text-align: center; margin-top: 3rem; padding: 2rem; color: rgba(255, 255, 255, 0.6); font-size: 0.95rem;">
-            <p><strong>Feito por germanoxz_</strong></p>
-        </div>
-    </main>
-
-    <script>
-        function switchTab(tabId) {
-            const allTabs = document.querySelectorAll('.tab-content');
-            const allButtons = document.querySelectorAll('.tab-button');
-            
-            allTabs.forEach(tab => {
-                tab.classList.remove('active');
-            });
-            
-            allButtons.forEach(button => {
-                button.classList.remove('active');
-            });
-            
-            document.getElementById(tabId).classList.add('active');
-            event.target.classList.add('active');
-        }
-
-        document.addEventListener('mousemove', (e) => {
-            const orbs = document.querySelectorAll('.orb');
-            const x = e.clientX / window.innerWidth;
-            const y = e.clientY / window.innerHeight;
-            
-            orbs.forEach((orb, index) => {
-                const speed = (index + 1) * 20;
-                orb.style.transform = `translate(${x * speed}px, ${y * speed}px)`;
-            });
-        });
-
-        const observerOptions = {
-            threshold: 0.1,
-            rootMargin: '0px 0px -100px 0px'
-        };
-
-        const observer = new IntersectionObserver((entries) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.style.opacity = '1';
-                    entry.target.style.transform = 'translateY(0)';
-                }
-            });
-        }, observerOptions);
-
-        document.querySelectorAll('.stat-card').forEach(card => {
-            card.style.opacity = '0';
-            card.style.transform = 'translateY(30px)';
-            card.style.transition = 'all 0.6s ease';
-            observer.observe(card);
-        });
-    </script>
-</body>
-</html>
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem; color: rgba(255, 255, 255, 0.6); font
